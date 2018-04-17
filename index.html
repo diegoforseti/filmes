@@ -1,0 +1,36 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</head>
+<body>
+
+	<div>
+		<div id="detalhe"></div>
+		<img id="poster" src="">
+	</div>
+
+	<script>
+		const API_LISTA_FILMES = 'http://www.mocky.io/v2/5ad631b32e00001000c93a96';
+		const API_DETALHE_FILME = 'http://www.theimdbapi.org/api/movie?movie_id={id}';
+
+		$('#detalhe').html('carregando ... ');
+
+		let sorteio = Math.floor((Math.random() * 101) + 1);
+
+		$.get(API_LISTA_FILMES, function(listaFilmes) {
+			let primeiro = listaFilmes[sorteio];
+
+			$.get(API_DETALHE_FILME.replace('{id}', primeiro), function(detalhe) {
+				$('#detalhe').html(`<h1>${detalhe.title}</h1> ${detalhe.description}`);
+				console.log(detalhe);
+
+				$('#poster').attr('src', detalhe.poster.thumb);				
+			});
+		});
+
+	</script>
+
+</body>
+</html>
